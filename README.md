@@ -21,7 +21,11 @@ SATS represents a first attempt at providing delegated tools to front line staff
   1. `$CmdsToInclude` are the commands that should be visible to users using this delegation.
   1. `$CmdsToExclude` allows you to define a subset of the "Include" cmds to really exclude. In our setup, we have a module called "PoshDHCP" which has some commands only sysadmins should use.
 1. Set up a constrained session configuration:
-  1. `Register-PSSessionConfiguration -Name SATS -Path C:\SATS\SessionConfiguration\SATS.pssc -RunAsCredential <Admin Service Account> -ShowSecurityDescriptorUI`
+  `Register-PSSessionConfiguration -Name SATS -Path C:\SATS\SessionConfiguration\SATS.pssc `
+  `-RunAsCredential <Admin Service Account> -ShowSecurityDescriptorUI`
 1. Depending on your organisation size, change the WinRM limits.
   1. `winrm set winrm/config/winrs @{MaxShellsPerUser="100"}`
   1. `winrm set winrm/config/winrs @{MaxConcurrentUsers="100"}`
+  1. `set-item WSMAN:\localhost\Plugin\SATS\Quotas\MaxConcurrentUsers 100`
+  1. `set-item WSMAN:\localhost\Plugin\SATS\Quotas\MaxShellsPerUser 100`
+  1. `set-item WSMAN:\localhost\Plugin\SATS\Quotas\MaxShells 100`
